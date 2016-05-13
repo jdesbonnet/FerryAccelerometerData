@@ -21,7 +21,7 @@ gnuplot <<- EOF
   set xlabel "Frequency (Hz)" textcolor rgb 'white'
   set ylabel "DFT magnitude (g units)" textcolor rgb 'white'
 
-  set label "Joe Desbonnet, 13 Feb 2016" at graph -0.11,-0.1 font ",8" tc rgb "white"
+  set label "Joe Desbonnet, 13 May 2016" at graph -0.11,-0.1 font ",8" tc rgb "white"
 
   set xrange [.05:1]
   #set yrange [0:1e3]
