@@ -40,7 +40,7 @@ int main (int argc, char **argv)
 	for (i = 0; i < N; i++) {
 		fgets(line, sizeof line, stdin);
 		sscanf(line, "%lf %d %d %d", &timestamp, &x, &y, &z);
-		in[i] = (double)z;
+		in[i] = (double)z/(1<<14);
 	}
 
 	int flags = FFTW_ESTIMATE;
