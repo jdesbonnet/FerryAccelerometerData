@@ -15,9 +15,9 @@ gnuplot <<- EOF
   set style line 1 linecolor rgb "green"
   set style line 2 linecolor rgb "blue"
 
-  set title "Frequency analysis of accelerometer sensor on ferry (z-axis)\n(LIS3DSH, 100sps, +/- 2g FSD, 200Hz anti-alias filter)" textcolor rgb 'white'
+  set title "Frequency analysis of accelerometer sensor on ferry\n(LIS3DSH, 100sps, +/- 2g FSD, 200Hz anti-alias filter)" textcolor rgb 'white'
   set xlabel "Frequency (Hz)" textcolor rgb 'white'
-  set ylabel "Amplitude" textcolor rgb 'white'
+  set ylabel "Amplitude (g units)" textcolor rgb 'white'
 
   set xrange [.05:1]
   #set yrange [0:1e3]

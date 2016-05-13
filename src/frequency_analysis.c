@@ -45,6 +45,7 @@ int main (int argc, char **argv)
 	for (i = 0; i < N; i++) {
 		fgets(line, sizeof line, stdin);
 		sscanf(line, "%lf %d %d %d", &timestamp, &a[0], &a[1], &a[2]);
+		//a[2] -= 17000;
 		v = a[axis];
 		in[i] = (double)a[axis]/(1<<14);
 	}
@@ -54,12 +55,14 @@ int main (int argc, char **argv)
 
 	fftw_execute(p);
 
+	// Output FFT
 	double oi,oj,mag;
-
 	for (i = 0; i < N/2; i++) {
 		oi = out[i][0];
 		oj = out[i][1];
-		mag = sqrt(oi*oi+oj*oj);
+		mag = sqrt(oi*oi+oj*oj)/(double)N;
+                //mag = sqrt(oi*oi+oj*oj);
+
 		fprintf (stdout, "%d %f %f %f %f\n", i, ((double)(i*SPS)/N), mag, oi, oj);
 	}
 
