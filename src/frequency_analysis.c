@@ -8,7 +8,9 @@
  */
 
 void usage (char *cmd) {
-	fprintf (stderr,"%s <log2-number-of-samples>\n",cmd);
+	fprintf (stderr,"%s <N> <axis-index>\n",cmd);
+	fprintf (stderr,"<N>: number of samples expressed as power of 2, eg 8 means 256 samples\n");
+	fprintf (stderr,"<axis>: 0: x-axis, 1: y-axis, 2: z-axis\n");
 }
 
 int main (int argc, char **argv) 
@@ -22,25 +24,29 @@ int main (int argc, char **argv)
 	const int SPS = 100;
 
 	double timestamp;
-	int i,x,y,z;
+	int i,v,x,y,z;
 
-	if (argc < 2) {
+	if (argc < 3) {
 		usage(argv[0]);
 		return EXIT_FAILURE;
 	}
 
 	int N = atoi(argv[1]);
+	int axis = atoi(argv[2]);
+
 	N = 1 << N;
 
 	double in[N];
 
 	out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
 
+	int a[3];
 
 	for (i = 0; i < N; i++) {
 		fgets(line, sizeof line, stdin);
-		sscanf(line, "%lf %d %d %d", &timestamp, &x, &y, &z);
-		in[i] = (double)z/(1<<14);
+		sscanf(line, "%lf %d %d %d", &timestamp, &a[0], &a[1], &a[2]);
+		v = a[axis];
+		in[i] = (double)a[axis]/(1<<14);
 	}
 
 	int flags = FFTW_ESTIMATE;
