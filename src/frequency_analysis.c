@@ -7,6 +7,10 @@
  * Frequency analysis of accelerometer data.
  */
 
+void usage (char *cmd) {
+	fprintf (stderr,"%s <log2-number-of-samples>\n",cmd);
+}
+
 int main (int argc, char **argv) 
 {
 	char line[80];
@@ -14,11 +18,19 @@ int main (int argc, char **argv)
 	fftw_complex *out;
 	fftw_plan p;
 
-	int N = 2048;
+	// Samples per second
+	const int SPS = 100;
+
 	double timestamp;
 	int i,x,y,z;
 
-	N = atoi(argv[1]);
+	if (argc < 2) {
+		usage(argv[0]);
+		return EXIT_FAILURE;
+	}
+
+	int N = atoi(argv[1]);
+	N = 1 << N;
 
 	double in[N];
 
@@ -29,7 +41,6 @@ int main (int argc, char **argv)
 		fgets(line, sizeof line, stdin);
 		sscanf(line, "%lf %d %d %d", &timestamp, &x, &y, &z);
 		in[i] = (double)z;
-		//printf ("in[%d]=%d\n",i,z);
 	}
 
 	int flags = FFTW_ESTIMATE;
@@ -43,8 +54,7 @@ int main (int argc, char **argv)
 		oi = out[i][0];
 		oj = out[i][1];
 		mag = sqrt(oi*oi+oj*oj);
-		fprintf (stdout, "%d %f %f %f\n", i, mag, oi, oj);
-
+		fprintf (stdout, "%d %f %f %f %f\n", i, ((double)(i*SPS)/N), mag, oi, oj);
 	}
 
 	fftw_destroy_plan(p);
