@@ -3,7 +3,7 @@ DEPS=-lm -lfftw3
 SOURCES=frequency_analysis.c
 EXECUTABLE=frequency_analysis
 
-all: frequency_analysis frequency_analysis2 waterfall_plot
+all: frequency_analysis frequency_analysis2 waterfall_plot histogram
 
 frequency_analysis: frequency_analysis.c
 	$(CC) -o frequency_analysis frequency_analysis.c $(DEPS)
@@ -13,6 +13,9 @@ frequency_analysis2: frequency_analysis2.c
 
 waterfall_plot: waterfall_plot.c
 	$(CC) -o waterfall_plot waterfall_plot.c $(DEPS)
+
+histogram: histogram.c
+	$(CC) -o histogram histogram.c $(DEPS)
 
 #$(EXECUTABLE): $(SOURCES) $(DEPS)
 #	$(CC) -o $@ $^
